@@ -21,7 +21,7 @@ class AdminController {
         // On affiche la page d'administration.
         $view = new View("Administration");
         $view->render("admin", [
-            'articles' => $articles
+            'articles' => $articles,
         ]);
     }
 
@@ -70,7 +70,9 @@ class AdminController {
         }
 
         // On vérifie que le mot de passe est correct.
-        if (!password_verify($password, $user->getPassword())) {
+        if ($password !== $user->getPassword()) {
+            var_dump($password);
+            var_dump($user->getPassword());
             $hash = password_hash($password, PASSWORD_DEFAULT);
             throw new Exception("Le mot de passe est incorrect : $hash");
         }
@@ -119,7 +121,7 @@ class AdminController {
         // On affiche la page de modification de l'article.
         $view = new View("Edition d'un article");
         $view->render("updateArticleForm", [
-            'article' => $article
+            'article' => $article,
         ]);
     }
 

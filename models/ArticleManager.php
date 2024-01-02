@@ -16,7 +16,11 @@ class ArticleManager extends AbstractEntityManager
         $articles = [];
 
         while ($article = $result->fetch()) {
-            $articles[] = new Article($article);
+            $article = new Article($article);
+
+            $commentsCount = $this->getCommentsCount($article->getId());
+            $article->setCommentsCount($commentsCount);
+            $articles[] = $article;
         }
         return $articles;
     }
@@ -32,9 +36,18 @@ class ArticleManager extends AbstractEntityManager
         $result = $this->db->query($sql, ['id' => $id]);
         $article = $result->fetch();
         if ($article) {
-            return new Article($article);
+            $article = new Article($article);
+            $article->incrementViewCount();
+            $this->saveViewCount($article->getId(), $article->getViewCount());
+            return $article;
         }
         return null;
+    }
+
+    public function saveViewCount(int $id, int $viewCount) : void
+    {
+        $sql = "UPDATE article SET view_count = :view_count WHERE id = :id";
+        $this->db->query($sql, ['id' => $id, 'view_count' => $viewCount]);
     }
 
     /**
@@ -59,7 +72,7 @@ class ArticleManager extends AbstractEntityManager
      */
     public function addArticle(Article $article) : void
     {
-        $sql = "INSERT INTO article (id_user, title, content, date_creation) VALUES (:id_user, :title, :content, NOW())";
+        $sql = "INSERT INTO article (id_user, title, content, date_creation, date_update) VALUES (:id_user, :title, :content, NOW(), NOW())";
         $this->db->query($sql, [
             'id_user' => $article->getIdUser(),
             'title' => $article->getTitle(),
@@ -92,4 +105,11 @@ class ArticleManager extends AbstractEntityManager
         $sql = "DELETE FROM article WHERE id = :id";
         $this->db->query($sql, ['id' => $id]);
     }
+
+    public function getCommentsCount(int $id): int
+    {
+        $sql = "SELECT COUNT(id) AS comment_count FROM comment WHERE id_article = :id";
+        return $this->db->query($sql, ['id' => $id])->fetchColumn();
+    }
+
 }

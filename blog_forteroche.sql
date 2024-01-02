@@ -26,7 +26,8 @@ SET time_zone = "+00:00";
 --
 -- Structure de la table `article`
 --
-
+ALTER TABLE `article` DROP FOREIGN KEY `link_article_user`;
+ALTER TABLE `comment` DROP FOREIGN KEY `link_comment_article`;
 DROP TABLE IF EXISTS `article`;
 CREATE TABLE IF NOT EXISTS `article` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -35,6 +36,7 @@ CREATE TABLE IF NOT EXISTS `article` (
   `content` text NOT NULL,
   `date_creation` datetime NOT NULL,
   `date_update` datetime DEFAULT NULL,
+  `view_count` int(11) DEFAULT 0,
   PRIMARY KEY (`id`),
   KEY `link_article_user` (`id_user`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;

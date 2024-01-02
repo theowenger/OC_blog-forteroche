@@ -32,3 +32,6 @@ Projet utilisé dans le cadre d'une formation Openclassrooms.
 
 Pour le .env creer un fichier config.php et config-example.php pour y inserer les constantes de DB (avec getEnv)
 prendre en compte example PUIS ecraser avec config, pour que les infos de example passent en par default.
+
+- gerer le triage du tableau admin
+- pouvoir supprimer un commentaire si connecté

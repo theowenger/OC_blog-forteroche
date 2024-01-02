@@ -10,7 +10,10 @@
     private string $title = "";
     private string $content = "";
     private ?DateTime $dateCreation = null;
-    private ?DateTime $dateUpdate = null;  
+    private ?DateTime $dateUpdate = null;
+    private int $viewCount = 0;
+    private int $commentsCount = 0;
+
 
     /**
      * Setter pour l'id de l'utilisateur. 
@@ -103,6 +106,11 @@
         return $this->dateCreation;
     }
 
+     public function displayDateCreation() :String
+     {
+         return $this->getDateCreation()->format('Y-m-d H:i:s');
+    }
+
     /**
      * Setter pour la date de mise à jour. Si la date est une string, on la convertit en DateTime.
      * @param string|DateTime $dateUpdate
@@ -126,5 +134,30 @@
     public function getDateUpdate() : ?DateTime 
     {
         return $this->dateUpdate;
+    }
+
+     public function getViewCount() : int
+     {
+         return $this->viewCount;
+    }
+
+     public function setViewCount($viewCount) :void
+     {
+         $this->viewCount = $viewCount;
+    }
+
+     public function getCommentsCount() : int
+     {
+         return $this->commentsCount;
+    }
+
+     public function incrementViewCount() :void
+     {
+         $this->viewCount++;
+     }
+
+     public function setCommentsCount(int $commentsCount) : void
+     {
+         $this->commentsCount = $commentsCount;
     }
  }
