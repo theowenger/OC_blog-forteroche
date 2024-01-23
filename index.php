@@ -41,6 +41,10 @@ try {
             $commentController->addComment();
             break;
 
+        case 'deleteComment':
+            $commentController = new CommentController();
+            $commentController->deleteComment();
+
 
         // Section admin & connexion. 
         case 'admin': 

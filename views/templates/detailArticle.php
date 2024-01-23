@@ -25,18 +25,24 @@
             echo '<p class="info">Aucun commentaire pour cet article.</p>';
         } else {
             echo '<ul>';
+            var_dump(isset($_SESSION['user']));
             foreach ($comments as $comment) {
                 echo '<li>';
                 echo '  <div class="smiley">☻</div>';
                 echo '  <div class="detailComment">';
                 echo '      <h3 class="info">Le ' . Utils::convertDateToFrenchFormat($comment->getDateCreation()) . ", " . Utils::format($comment->getPseudo()) . ' a écrit :</h3>';
                 echo '      <p class="content">' . Utils::format($comment->getContent()) . '</p>';
+                if (isset($_SESSION['user']) !== false) {
+                    echo '<div class="delete-container"><a href="index.php?action=deleteComment&commentId=' . $comment->getId() . '&articleId=' . $article->getId() . '" class="delete-btn">supprimer</a></div>';
+                }
+
                 echo '  </div>';
                 echo '</li>';
             }               
             echo '</ul>';
         } 
     ?>
+    <a class="submit" href="index.php?action=showUpdateArticleForm">Ajouter un article</a>
 
     <form action="index.php" method="post" class="foldedCorner">
         <h2>Commenter</h2>

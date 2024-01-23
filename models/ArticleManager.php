@@ -12,17 +12,19 @@ class ArticleManager extends AbstractEntityManager
     public function getAllArticles() : array
     {
         $sql = "SELECT * FROM article";
-        $result = $this->db->query($sql);
-        $articles = [];
-
-        while ($article = $result->fetch()) {
-            $article = new Article($article);
-
-            $commentsCount = $this->getCommentsCount($article->getId());
-            $article->setCommentsCount($commentsCount);
-            $articles[] = $article;
+        return $this->extracted($sql);
+    }
+    public function getFilteredArticles($sort, $order) : array
+    {
+        if($order === "comment_count") {
+            $sql = "SELECT article.*, COUNT(comment.id) AS $order
+            FROM article
+            LEFT JOIN comment ON article.id = comment.id_article
+            GROUP BY article.id ORDER BY $order $sort";
+        } else {
+            $sql = "SELECT * FROM article ORDER BY $order $sort";
         }
-        return $articles;
+        return $this->extracted($sql);
     }
     
     /**
@@ -110,6 +112,25 @@ class ArticleManager extends AbstractEntityManager
     {
         $sql = "SELECT COUNT(id) AS comment_count FROM comment WHERE id_article = :id";
         return $this->db->query($sql, ['id' => $id])->fetchColumn();
+    }
+
+    /**
+     * @param string $sql
+     * @return array
+     */
+    public function extracted(string $sql): array
+    {
+        $result = $this->db->query($sql);
+        $articles = [];
+
+        while ($article = $result->fetch()) {
+            $article = new Article($article);
+
+            $commentsCount = $this->getCommentsCount($article->getId());
+            $article->setCommentsCount($commentsCount);
+            $articles[] = $article;
+        }
+        return $articles;
     }
 
 }

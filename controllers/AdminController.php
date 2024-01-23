@@ -16,8 +16,11 @@ class AdminController {
 
         // On récupère les articles.
         $articleManager = new ArticleManager();
-        $articles = $articleManager->getAllArticles();
 
+        $order = $_GET['order'] ?? 'title';
+        $sort = isset($_GET['sort']) && $_GET['sort'] === 'desc' ? 'desc' : 'asc';
+
+        $articles = $articleManager->getFilteredArticles($sort, $order);
         // On affiche la page d'administration.
         $view = new View("Administration");
         $view->render("admin", [
@@ -50,6 +53,7 @@ class AdminController {
     /**
      * Connexion de l'utilisateur.
      * @return void
+     * @throws Exception
      */
     public function connectUser() : void 
     {
