@@ -116,6 +116,7 @@ form .formGrid .submit {
 
 .submit-delete {
     background-color: #c2342b;
+    margin-top: 10px;
 }
 
 /**
@@ -373,7 +374,7 @@ a.info {
 }
 
 .form-admin {
-    background-color: rgba(62, 147, 69, 0.89);
+    background-color: var(--commentPaleColor);
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -399,7 +400,12 @@ a.info {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
+}
+
+
+.title-button-container {
+    padding: 50px;
 }
 
 .delete-container {

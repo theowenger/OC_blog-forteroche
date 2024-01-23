@@ -1,3 +1,4 @@
+
 ## Blog d'Emilie Forteroche
 
 ## Pour utiliser ce projet : 
@@ -35,3 +36,4 @@ prendre en compte example PUIS ecraser avec config, pour que les infos de exampl
 
 - gerer le triage du tableau admin
 - pouvoir supprimer un commentaire si connecté
+- mettre en place un linter pour les normes PSR (dependance ou non) : codacy

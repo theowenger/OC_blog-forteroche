@@ -25,7 +25,6 @@
             echo '<p class="info">Aucun commentaire pour cet article.</p>';
         } else {
             echo '<ul>';
-            var_dump(isset($_SESSION['user']));
             foreach ($comments as $comment) {
                 echo '<li>';
                 echo '  <div class="smiley">☻</div>';

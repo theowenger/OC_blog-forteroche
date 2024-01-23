@@ -18,7 +18,8 @@ class AdminController {
         $articleManager = new ArticleManager();
 
         $order = $_GET['order'] ?? 'title';
-        $sort = isset($_GET['sort']) && $_GET['sort'] === 'desc' ? 'desc' : 'asc';
+        $sort = filter_input(INPUT_GET, 'sort');
+        $sort = ($sort === 'desc') ? 'desc' : 'asc';
 
         $articles = $articleManager->getFilteredArticles($sort, $order);
         // On affiche la page d'administration.

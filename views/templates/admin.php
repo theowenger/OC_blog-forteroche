@@ -28,19 +28,26 @@
 <h2>Edition des articles</h2>
 
 <div class="adminArticle">
+    <div class="articleLine">
+        <div class="title">Titre</div>
+        <div class="description">Contenu</div>
+        <div class="content flex-col date"><p>création</p></div>
+        <div class="content flex-col"><p>Vues</p></div>
+        <div class="content flex-col"><p>Com</p></div>
+        <div class="admin-button-container">Paramètrages</div>
+    </div>
     <?php
 
     $alternateClass = 'primary';
-
     foreach ($articles as $article) {
         $alternateClass = ($alternateClass === 'primary') ? 'secondary' : 'primary';
         ?>
         <div class="articleLine <?= $alternateClass ?>">
             <div class="title"><?= $article->getTitle() ?></div>
             <div class="description"><?= $article->getContent(200) ?></div>
-            <div class="content flex-col date"><p>créé le:</p><?= $article->displayDateCreation() ?></div>
-            <div class="content flex-col"><p>Vues:</p><?= $article->getViewCount() ?></div>
-            <div class="content flex-col"><p>Coms:</p><?= $article->getCommentsCount() ?></div>
+            <div class="content flex-col date"><?= $article->displayDateCreation() ?></div>
+            <div class="content flex-col"><?= $article->getViewCount() ?></div>
+            <div class="content flex-col"><?= $article->getCommentsCount() ?></div>
             <div class="admin-button-container">
                 <a class="submit"
                    href="index.php?action=showUpdateArticleForm&id=<?= $article->getId() ?>">Modifier</a>
